@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EleMeta - Image Metadata Extractor</title>
+  <meta name="description" content="Extract and view metadata from your images easily." />
+  <meta name="author" content="Alosious Benny" />
+  <meta name="keywords" content="image, metadata, exif, gps, camera, json, extractor" />
+  <meta name="theme-color" content="#4f46e5" />
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="apple-touch-icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='scrollbar.css') }}">
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-title">EleMeta</div>
+    <div class="nav-sub">Lightweight image metadata inspector</div>
+  </nav>
+
+  <div class="site-container">
+    <div class="description">
+      Upload a JPEG or PNG image to extract EXIF metadata such as camera details, timestamps, and GPS coordinates.  
+      Copy the JSON easily using the clipboard icon on the metadata box.
+    </div>
+
+    {% if error %}
+      <p style="color:#ffb4b4; text-align:center;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+      <div class="file-input-wrapper">
+        <label class="file-input-label" for="image">📁 Choose an image or click to browse</label>
+        <input id="image" type="file" name="image" accept="image/*" required>
+      </div>
+      <div id="fileName" class="file-name" aria-live="polite"></div>
+      <button type="submit">Extract Metadata</button>
+    </form>
+
+    {% if metadata %}
+      <h2>Metadata</h2>
+      <div class="metadata-container" style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:720px;">
+        <button id="copyIcon" class="copy-icon" type="button" title="Copy metadata" aria-label="Copy metadata">
+          <i class="fa-solid fa-clipboard" aria-hidden="true"></i>
+        </button>
+        <div class="metadata-scroll" aria-live="polite">
+          <pre id="metadataBlock">{{ metadata | tojson(indent=2) }}</pre>
+        </div>
+      </div>
+    {% endif %}
+
+    <footer>Made by <strong>Alosious Benny</strong></footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
