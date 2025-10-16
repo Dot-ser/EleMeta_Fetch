@@ -1,7 +1,5 @@
-![alt text](https://files.catbox.moe/bf7afe.png)
-
-
 # Image Metadata Viewer (Flask)
+![alt text](https://files.catbox.moe/f11xqf.jpg)
 
 A simple Flask web app to extract and display image metadata (EXIF), including GPS latitude/longitude when available. Upload a photo in the browser and see its metadata rendered in a friendly format.
 
